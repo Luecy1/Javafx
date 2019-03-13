@@ -1,11 +1,13 @@
 import javafx.collections.FXCollections
 import javafx.fxml.FXML
 import javafx.scene.control.Alert
+import javafx.scene.control.ListCell
 import javafx.scene.control.ListView
 import javafx.scene.control.TextArea
 import javafx.scene.input.KeyCode
 import javafx.util.Callback
-import javafx.scene.control.ListCell
+import kotlinx.coroutines.*
+import kotlinx.coroutines.javafx.JavaFx
 
 class Controller {
 
@@ -29,13 +31,26 @@ class Controller {
 
         val items = FXCollections.observableArrayList<Row>()
         (1..10).forEach {
-            items += Row("Name $it"," Tweet $it")
+            items += Row("Name $it"," Tweet $it あああああああああああああああああああああ" +
+                    "ああああ")
         }
 
         listView.cellFactory = Callback<ListView<Row>, ListCell<Row>> {
             RowController()
         }
         listView.items = items
+
+        GlobalScope.launch(Dispatchers.Default){
+
+            val result = withContext(Dispatchers.JavaFx) {
+                delay(3 * 1000L)
+                TwitterApi().getSearch("")
+            }
+
+
+            area.text = "huga" + Thread.currentThread().id.toString()
+        }
+        area.text = Thread.currentThread().id.toString()
     }
 
     @FXML fun handleSubmitButtonAction() {

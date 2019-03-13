@@ -5,12 +5,12 @@
 <?import javafx.scene.text.Text?>
 
 <?import javafx.scene.layout.VBox?>
-<AnchorPane prefHeight="-1.0" prefWidth="150.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="-1.0" prefWidth="120.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <VBox fx:id="cellContainer" layoutX="0.0" layoutY="0.0" maxWidth="-Infinity" prefHeight="-1.0" prefWidth="150.0">
+      <VBox fx:id="cellContainer" layoutX="0.0" layoutY="0.0" maxWidth="-Infinity" prefHeight="-1.0" prefWidth="120.0">
          <children>
             <Label fx:id="name" layoutX="14.0" layoutY="14.0" text="Name" />
-            <Text fx:id="tweet" layoutX="14.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="350.0" />
+            <Text fx:id="tweet" layoutX="14.0" layoutY="54.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="200.0" />
          </children>
       </VBox>
    </children>

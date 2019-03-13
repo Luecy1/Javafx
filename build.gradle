@@ -19,6 +19,13 @@ repositories {
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+    // https://github.com/Kotlin/kotlinx.coroutines
+    compile 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.1.1'
+    compile 'org.jetbrains.kotlinx:kotlinx-coroutines-javafx:1.1.1'
+
+    // https://mvnrepository.com/artifact/org.twitter4j/twitter4j-core
+    compile group: 'org.twitter4j', name: 'twitter4j-core', version: '4.0.7'
+
 }
 
 sourceSets {
