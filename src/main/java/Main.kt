@@ -13,14 +13,15 @@ class Main : Application() {
     override fun start(primaryStage: Stage) {
 
         try {
-            val resource = javaClass.getResource("mainLayout.fxml")
-            val parent = FXMLLoader.load<Parent>(resource)
+            val fxmlLoader = FXMLLoader(javaClass.getResource("mainLayout.fxml"))
+            val parent = fxmlLoader.load<Parent>()
 
             val scene = Scene(parent)
             primaryStage.scene = scene
 
-            primaryStage.title = "TODO"
+            primaryStage.title = "Twitter"
             primaryStage.show()
+
         } catch (e: Exception) {
             e.printStackTrace()
         }

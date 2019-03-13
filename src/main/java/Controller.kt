@@ -4,12 +4,14 @@ import javafx.scene.control.Alert
 import javafx.scene.control.ListView
 import javafx.scene.control.TextArea
 import javafx.scene.input.KeyCode
+import javafx.util.Callback
+import javafx.scene.control.ListCell
 
 class Controller {
 
     @FXML private lateinit var area: TextArea
 
-    @FXML private lateinit var listView: ListView<String>
+    @FXML private lateinit var listView: ListView<Row>
 
     // 押されたキーを管理
     private val pressKeys = mutableSetOf<KeyCode>()
@@ -25,13 +27,14 @@ class Controller {
             pressKeys -= it.code
         }
 
-        val items = FXCollections.observableArrayList<String>(
-                "one", "two", "three"
-        )
+        val items = FXCollections.observableArrayList<Row>()
         (1..10).forEach {
-            items += "item $it"
+            items += Row("Name $it"," Tweet $it")
         }
 
+        listView.cellFactory = Callback<ListView<Row>, ListCell<Row>> {
+            RowController()
+        }
         listView.items = items
     }
 
