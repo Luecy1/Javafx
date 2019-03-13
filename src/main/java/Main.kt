@@ -2,7 +2,6 @@ import javafx.application.Application
 import javafx.fxml.FXMLLoader
 import javafx.scene.Parent
 import javafx.scene.Scene
-import javafx.scene.input.KeyCode
 import javafx.stage.Stage
 
 fun main(args: Array<String>) {
@@ -14,13 +13,13 @@ class Main : Application() {
     override fun start(primaryStage: Stage) {
 
         try {
-            val resource = javaClass.getResource("sample.fxml")
+            val resource = javaClass.getResource("mainLayout.fxml")
             val parent = FXMLLoader.load<Parent>(resource)
 
             val scene = Scene(parent)
             primaryStage.scene = scene
 
-            primaryStage.title = "hoge"
+            primaryStage.title = "TODO"
             primaryStage.show()
         } catch (e: Exception) {
             e.printStackTrace()
