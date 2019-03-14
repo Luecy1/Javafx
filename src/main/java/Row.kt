@@ -2,10 +2,9 @@ import javafx.beans.property.SimpleStringProperty
 import javafx.beans.property.StringProperty
 
 
-class Row(name : String, tweet : String) {
+class Row(name : String, tweet : String, val detailUrl : String) {
 
     val name : StringProperty = SimpleStringProperty()
-
     val tweet : StringProperty = SimpleStringProperty()
 
     init {

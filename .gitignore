@@ -40,4 +40,6 @@ build/
 .idea/inspectionProfiles/profiles_settings.xml
 .idea/.name
 .idea/artifacts/dist_auto_*
+
+twitter4j.properties
 kotlin-ultimate/
