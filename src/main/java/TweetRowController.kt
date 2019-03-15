@@ -5,7 +5,7 @@ import javafx.scene.text.Text
 import javafx.fxml.FXMLLoader
 import javafx.scene.layout.VBox
 
-class RowController : ListCell<Row>() {
+class TweetRowController : ListCell<TweetRow>() {
 
     @FXML lateinit var cellContainer: VBox
 
@@ -14,12 +14,12 @@ class RowController : ListCell<Row>() {
 
     init {
         FXMLLoader(javaClass.getResource("tweet_cell.fxml")).apply {
-            setController(this@RowController)
+            setController(this@TweetRowController)
             load()
         }
     }
 
-    override fun updateItem(item: Row?, empty: Boolean) {
+    override fun updateItem(item: TweetRow?, empty: Boolean) {
         super.updateItem(item, empty)
 
         if (empty) {

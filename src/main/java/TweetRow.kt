@@ -2,7 +2,7 @@ import javafx.beans.property.SimpleStringProperty
 import javafx.beans.property.StringProperty
 
 
-class Row(name : String, tweet : String, val detailUrl : String) {
+class TweetRow(name : String, tweet : String, val detailUrl : String) {
 
     val name : StringProperty = SimpleStringProperty()
     val tweet : StringProperty = SimpleStringProperty()

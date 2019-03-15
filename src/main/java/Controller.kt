@@ -13,14 +13,12 @@ class Controller {
     @FXML private lateinit var area: TextArea
 
     @FXML private lateinit var keyword: TextField
-    @FXML private lateinit var button : Button
+    @FXML private lateinit var searchToggle : ToggleButton
 
-    @FXML private lateinit var listView: ListView<Row>
+    @FXML private lateinit var listView: ListView<TweetRow>
 
     // 押されたキーを管理
     private val pressKeys = mutableSetOf<KeyCode>()
-
-    private var searchingFlg = false
 
     private val twitterRepository = TwitterRepository()
 
@@ -35,33 +33,33 @@ class Controller {
             pressKeys -= it.code
         }
 
-        val items = FXCollections.observableArrayList<Row>()
-
-        listView.cellFactory = Callback<ListView<Row>, ListCell<Row>> {
-            RowController()
+        listView.cellFactory = Callback<ListView<TweetRow>, ListCell<TweetRow>> {
+            TweetRowController()
         }
-        listView.items = items
+        listView.items = FXCollections.observableArrayList<TweetRow>()
 
         listView.setOnMouseClicked {
             if (it.clickCount == 2) {
                 val selectedItems = listView.selectionModel.selectedItems
-                println(selectedItems[0].detailUrl)
                 Desktop.getDesktop().browse(URI(selectedItems[0].detailUrl))
             }
         }
+
+        searchToggle.setOnAction {
+            toggleSearchButton()
+        }
     }
 
-    @FXML fun handleSubmitButtonAction() {
-        if (!searchingFlg) {
+    private fun toggleSearchButton() {
+        if (searchToggle.isSelected) {
 
             if (keyword.text.isEmpty()) {
                 showAlert(Alert.AlertType.WARNING, getOwner(), "警告", "検索キーワードを入力してください。")
+                searchToggle.isSelected = false
                 return
             }
 
             showAlert(Alert.AlertType.INFORMATION, getOwner(), "情報", "検索を開始します。")
-            button.text = "検索中"
-            searchingFlg = true
 
             GlobalScope.launch(Dispatchers.JavaFx) {
 
@@ -72,15 +70,12 @@ class Controller {
                     listView.items.addAll(0, result)
 
                     delay(10 * 1000L)
-                    if (!searchingFlg) break
+                    if (!searchToggle.isSelected) break
                 }
             }
         } else {
-            showAlert(Alert.AlertType.INFORMATION, getOwner(), "情報", "検索を中止します。")
-            button.text = "検索"
-            searchingFlg = false
+            showAlert(Alert.AlertType.INFORMATION, getOwner(), "情報", "検索を中止しました。")
         }
-
     }
 
     private fun getOwner() = area.scene.window
@@ -90,7 +85,7 @@ class Controller {
 
             if (area.text.isEmpty()) return
 
-            confirmAlert(getOwner()," 確認","ツイートしますか") {
+            confirmAlert(getOwner()," 確認","ツイートしますか?") {
                 twitterRepository.tweet("${area.text} ${keyword.text}")
                 area.text = ""
             }

@@ -4,14 +4,15 @@ import javafx.scene.control.Alert
 import javafx.scene.control.ButtonType
 import javafx.stage.Window
 
-fun showAlert(alertType: Alert.AlertType, owner: Window, title: String, message: String) =
-        Alert(alertType).apply {
-            this.title = title
-            this.headerText = null
-            this.contentText = message
-            this.initOwner(owner)
-            this.showAndWait()
-        }
+fun showAlert(alertType: Alert.AlertType, owner: Window, title: String, message: String) {
+    Alert(alertType).apply {
+        this.title = title
+        this.headerText = null
+        this.contentText = message
+        this.initOwner(owner)
+        this.showAndWait()
+    }
+}
 
 fun confirmAlert(owner: Window, title: String, message: String, okAction: () -> Unit) {
 
@@ -20,11 +21,10 @@ fun confirmAlert(owner: Window, title: String, message: String, okAction: () -> 
         this.headerText = null
         this.contentText = message
         this.initOwner(owner)
-        this.showAndWait().filter{
+        this.showAndWait().filter {
             it == ButtonType.OK
         }.ifPresent {
             okAction()
         }
     }
-
 }

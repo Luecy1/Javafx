@@ -13,7 +13,7 @@ class Main : Application() {
     override fun start(primaryStage: Stage) {
 
         try {
-            val fxmlLoader = FXMLLoader(javaClass.getResource("mainLayout.fxml"))
+            val fxmlLoader = FXMLLoader(javaClass.getResource("main_layout.fxml"))
             val parent = fxmlLoader.load<Parent>()
 
             val scene = Scene(parent)

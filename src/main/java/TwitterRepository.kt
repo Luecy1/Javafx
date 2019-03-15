@@ -8,11 +8,11 @@ class TwitterRepository {
 
     private val twitter = TwitterFactory().instance
 
-    fun getSearch(queryString: String): List<Row> {
+    fun getSearch(queryString: String): List<TweetRow> {
 
         if (queryString.isEmpty()) return emptyList()
 
-        val result = mutableListOf<Row>()
+        val result = mutableListOf<TweetRow>()
 
         val query = Query(queryString)
         query.lang = "ja"
@@ -23,7 +23,7 @@ class TwitterRepository {
 
         newStatus.forEach {
             val url = "https://twitter.com/${it.user.screenName}/status/${it.id}"
-            result.add(Row(it.user.name, it.text, url))
+            result.add(TweetRow(it.user.name, it.text, url))
         }
 
         return result
