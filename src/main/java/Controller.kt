@@ -5,6 +5,7 @@ import javafx.scene.input.KeyCode
 import javafx.util.Callback
 import kotlinx.coroutines.*
 import kotlinx.coroutines.javafx.JavaFx
+import org.apache.logging.log4j.LogManager
 import java.awt.Desktop
 import java.net.URI
 
@@ -98,9 +99,17 @@ class Controller {
 
             if (tweetTextArea.text.isEmpty()) return
 
-            confirmAlert(getOwner()," 確認","ツイートしますか?") {
-                twitterRepository.tweet("${tweetTextArea.text} ${keyword.text}")
+            confirmAlert(getOwner(),"確認","ツイートしますか?") {
+
+                val tweetText = "${tweetTextArea.text} ${keyword.text}"
+
+                twitterRepository.tweet(tweetText)
+
+                log.info("Tweet : $tweetText")
                 tweetTextArea.text = ""
+
+                // ダイアログ中にクリアされないため
+                pressKeys.clear()
             }
         }
     }
@@ -108,5 +117,9 @@ class Controller {
     private fun openSelectedDetail() {
         val selectedItems = tweetListView.selectionModel.selectedItems
         Desktop.getDesktop().browse(URI(selectedItems[0].detailUrl))
+    }
+
+    companion object {
+        private val log = LogManager.getLogger(Controller::class.java.simpleName)
     }
 }

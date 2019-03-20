@@ -26,6 +26,9 @@ dependencies {
     // https://mvnrepository.com/artifact/org.twitter4j/twitter4j-core
     compile group: 'org.twitter4j', name: 'twitter4j-core', version: '4.0.7'
 
+    // log4j
+    compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.11.2'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.11.2'
 }
 
 sourceSets {
@@ -34,6 +37,7 @@ sourceSets {
     }
 }
 idea.module.outputDir file("out/production/classes")
+idea.module.inheritOutputDirs = true
 
 compileKotlin {
     kotlinOptions {
