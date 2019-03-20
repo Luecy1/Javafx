@@ -15,7 +15,6 @@ fun showAlert(alertType: Alert.AlertType, owner: Window, title: String, message:
 }
 
 fun confirmAlert(owner: Window, title: String, message: String, okAction: () -> Unit) {
-
     Alert(Alert.AlertType.CONFIRMATION).apply {
         this.title = title
         this.headerText = null

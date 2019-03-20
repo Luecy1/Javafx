@@ -10,12 +10,14 @@ import java.net.URI
 
 class Controller {
 
-    @FXML private lateinit var area: TextArea
+    @FXML
+    private lateinit var tweetTextArea: TextArea
 
     @FXML private lateinit var keyword: TextField
     @FXML private lateinit var searchToggle : ToggleButton
 
-    @FXML private lateinit var listView: ListView<TweetRow>
+    @FXML
+    private lateinit var tweetListView: ListView<TweetRow>
 
     // 押されたキーを管理
     private val pressKeys = mutableSetOf<KeyCode>()
@@ -24,24 +26,35 @@ class Controller {
 
     @FXML fun initialize() {
 
-        area.setOnKeyPressed {
+        tweetTextArea.setOnKeyPressed {
             pressKeys += it.code
             judgeKeys()
         }
 
-        area.setOnKeyReleased {
+        tweetTextArea.setOnKeyReleased {
             pressKeys -= it.code
         }
 
-        listView.cellFactory = Callback<ListView<TweetRow>, ListCell<TweetRow>> {
+        tweetListView.cellFactory = Callback<ListView<TweetRow>, ListCell<TweetRow>> {
             TweetRowController()
         }
-        listView.items = FXCollections.observableArrayList<TweetRow>()
+        tweetListView.items = FXCollections.observableArrayList<TweetRow>()
 
-        listView.setOnMouseClicked {
+        tweetListView.setOnMouseClicked {
             if (it.clickCount == 2) {
-                val selectedItems = listView.selectionModel.selectedItems
-                Desktop.getDesktop().browse(URI(selectedItems[0].detailUrl))
+                openSelectedDetail()
+            }
+        }
+        tweetListView.setOnKeyPressed {
+            if (it.code == KeyCode.ENTER) {
+                openSelectedDetail()
+            }
+        }
+
+        keyword.setOnKeyPressed {
+            if (it.code == KeyCode.ENTER) {
+                searchToggle.isSelected = true
+                toggleSearchButton()
             }
         }
 
@@ -67,7 +80,7 @@ class Controller {
                     val result = withContext(Dispatchers.Default) {
                         twitterRepository.getSearch(keyword.text)
                     }
-                    listView.items.addAll(0, result)
+                    tweetListView.items.addAll(0, result)
 
                     delay(10 * 1000L)
                     if (!searchToggle.isSelected) break
@@ -78,17 +91,22 @@ class Controller {
         }
     }
 
-    private fun getOwner() = area.scene.window
+    private fun getOwner() = tweetTextArea.scene.window
 
     private fun judgeKeys() {
         if (pressKeys.contains(KeyCode.ENTER) && pressKeys.contains(KeyCode.COMMAND)) {
 
-            if (area.text.isEmpty()) return
+            if (tweetTextArea.text.isEmpty()) return
 
             confirmAlert(getOwner()," 確認","ツイートしますか?") {
-                twitterRepository.tweet("${area.text} ${keyword.text}")
-                area.text = ""
+                twitterRepository.tweet("${tweetTextArea.text} ${keyword.text}")
+                tweetTextArea.text = ""
             }
         }
+    }
+
+    private fun openSelectedDetail() {
+        val selectedItems = tweetListView.selectionModel.selectedItems
+        Desktop.getDesktop().browse(URI(selectedItems[0].detailUrl))
     }
 }
